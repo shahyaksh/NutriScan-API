@@ -80,19 +80,23 @@ def separate_unit(string):
 def get_additives_from_ingredients(ingredient_list):
     r1 = re.compile('E\s?\d{4}[a-f]?|E\s?\d{3}[a-f]?')
     r2 = re.compile('[INS]\s?\d{4}[a-f]?|[INS]\s?\d{3}[a-f]?')
+    r3 = re.compile('\d{3}|\d{4}')
 
-    e_num_lst=[]
+    e_num_lst = []
 
     for ingredient in ingredient_list[0]:
-        additive_1= r1.findall(ingredient)
+        additive_1 = r1.findall(ingredient)
         additive_2 = r2.findall(ingredient)
-
+        additive_3 = r3.findall(ingredient)
         if additive_1:
             additive_1 = [re.sub('E ', 'E', additive) for additive in additive_1]
-            e_num_lst.append(*additive_1)
+            e_num_lst.extend(additive_1)
         elif additive_2:
-            additive_2=[re.sub('[INS]', 'E', additive) for additive in additive_2]
-            e_num_lst.append(*additive_2)
+            additive_2 = [re.sub('[INS]', 'E', additive) for additive in additive_2]
+            e_num_lst.extend(additive_2)
+        elif additive_3:
+            additive_3 = ['E' + additive for additive in additive_3]
+            e_num_lst.extend(additive_3)
 
     if e_num_lst:
         return e_num_lst
@@ -101,9 +105,14 @@ def get_additives_from_ingredients(ingredient_list):
 
 
 if __name__ == "__main__":
-
-    list=[['Kair.Red Chilly Powder. Edible Oil,', 'INGREDIENTS:', 'lodized Salt,Mustard,&Ground Spices.',
-           '(Asafoetida.CloveAcidity Regulator', 'Acetic Acid (INS260).Contains Permitted', 'Class lPreservative(INS211)',
-           'NETWEIGHT:200q']]
+    list = [["COATED WAFER LAYERS",
+             "Ingredients:Sugar.Hydrogenated",
+             "vegetable fat,Refined wheat flour. Milk",
+             "solids,Starch,Cocoa solids 5%",
+             "Palmolein oil,Emulsifiers (442,322,476),Edible salt",
+             "Yeast, Raising agent 500(ii,Improver Enzyme",
+             "CONTAINS ADDED FLAVOUR NATURAL, NATURE IDENTICAL AND",
+             "ARTIPICIAL (CARAMEL AND ETHYL VANILLIN) FLAVOURING SUBSTANCES)",
+             "Allergen informationContains Milk & Wheat."]]
     additive_info = get_additives_from_ingredients(list)
     print(additive_info)

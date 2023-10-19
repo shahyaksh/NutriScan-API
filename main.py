@@ -1,5 +1,5 @@
 from src.SafeBiteAPI.utils import regex, info
-from fastapi import FastAPI, File, UploadFile,Form, HTTPException
+from fastapi import FastAPI, File, UploadFile, Form, HTTPException
 import uuid
 from paddleocr import PaddleOCR
 import pymongo
@@ -19,15 +19,15 @@ NUTRI_IMGDIR = "images/nutritiontable/"
 ocr_model = PaddleOCR(lang='en', use_gpu=True)
 
 
-def convert_table_to_dict(table):
-    labels = ['Energy', 'Saturated Fat', 'Protein', 'Carbohydrate', 'Total Sugars'
+def convert_nutrition_table_to_dict(table):
+    labels = ['Energy', 'Saturated Fat', 'Protein', 'Carbohydrate', 'Total Sugar'
         , 'Added Sugars', 'Total Fat', 'Trans Fat', 'Sodium']
     table_dict = {}
     index = 0
     for text in table[0]:
         for label in labels:
             if label in text:
-                table_dict[text] = table[0][index + 1]
+                table_dict[label] = table[0][index + 1]
         index += 1
     return table_dict
 
@@ -54,7 +54,9 @@ async def home():
 
 
 @app.post("/upload/ingredients")
-async def get_image_by_upload(file: UploadFile = File(...), user_preference: dict = Form(...)):
+async def get_image_by_upload(file: UploadFile = File(...), milk: int = Form(...),
+                              nuts: int = Form(...), soy: int = Form(...), gluten: int = Form(...),
+                              palm_oil: int = Form(...), onion_and_garlic: int = Form(...)):
     file.filename = f"{uuid.uuid4()}.jpg"
     contents = await file.read()
     path = f"{ING_IMGDIR}{file.filename}"
@@ -66,22 +68,44 @@ async def get_image_by_upload(file: UploadFile = File(...), user_preference: dic
         additive_information = info.get_ingredients_info(additive, col)
     else:
         additive_information = "No additives detected "
-    return {"ingredients": text, 'additives': additive_information}
+    users_allergen_preferences = {
+        'milk': milk,
+        'soy': soy,
+        'peanuts': nuts,
+        'nuts': nuts,
+        'gluten': gluten
+    }
+    users_ingredients_preferences = {
+        'Palm Oil':palm_oil,
+        'Onion and Garlic':onion_and_garlic
+    }
+
+    allergen_info = info.check_users_allergen_preferences(text, users_allergen_preferences)
+    ingredients_info = info.check_users_ingredient_preferences(text,users_ingredients_preferences)
+    return {"ingredients": text, 'additives': additive_information,'allergen_info': allergen_info,
+            'ingredients_info':ingredients_info}
 
 
 @app.post("/upload/nutritiontable")
-async def get_image_by_upload(file: UploadFile = File(...), user_preference: dict = Form(...)):
+async def get_image_by_upload(file: UploadFile = File(...), salt: int = Form(...),
+                              sugar: int = Form(...), total_fat: int = Form(...), sat_fat: int = Form(...)):
     file.filename = f"{uuid.uuid4()}.jpg"
     contents = await file.read()
     path = f"{NUTRI_IMGDIR}{file.filename}"
     with open(path, "wb") as f:
         f.write(contents)
     texts = get_results_of_ocr(path)
-    print(texts)
-    table_dict = convert_table_to_dict(texts)
+    table_dict = convert_nutrition_table_to_dict(texts)
     if table_dict != {}:
         nutri_score = info.get_nutriscore(table_dict)
-        return {"Table": table_dict, "Nutri Score": nutri_score}
+        user_nutrition_preferences = {
+            'Salt': salt,
+            'Sugar': sugar,
+            'Total Fat': total_fat,
+            'Saturated Fat': sat_fat
+        }
+        nutrition_info = info.check_users_nutrition_preferences(table_dict, user_nutrition_preferences)
+        return {"Table": table_dict, "Nutri Score": nutri_score,'nutrition_info':nutrition_info}
     else:
         return "Sorry! Cannot Calculate Nutri Score try taking clear image"
 
