@@ -3,9 +3,17 @@ from fastapi import FastAPI, File, UploadFile, Form, HTTPException
 import uuid
 from paddleocr import PaddleOCR
 import pymongo
+from pymongo.server_api import ServerApi
 
-client = pymongo.MongoClient("mongodb://localhost:27017/")
+uri = "mongodb+srv://yakshshah:Yaksh1782@nutriscan.bsfbzvl.mongodb.net/?retryWrites=true&w=majority"
+# Create a new client and connect to the server
+client = pymongo.MongoClient(uri, server_api=ServerApi('1'))
 
+try:
+    client.admin.command('ping')
+    print("Pinged your deployment. You successfully connected to MongoDB!")
+except Exception as e:
+    print(e)
 # Database Name
 db = client["FoodAdditives"]
 
