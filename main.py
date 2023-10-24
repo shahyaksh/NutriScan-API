@@ -16,12 +16,12 @@ app = FastAPI(debug=True)
 ING_IMGDIR = "images/ingredients/"
 NUTRI_IMGDIR = "images/nutritiontable/"
 
-ocr_model = PaddleOCR(lang='en', use_gpu=True)
+ocr_model = PaddleOCR(lang='en', use_gpu=False)
 
 
 def convert_nutrition_table_to_dict(table):
-    labels = ['Energy', 'Saturated Fat', 'Protein', 'Carbohydrate', 'Total Sugar'
-        , 'Added Sugars', 'Total Fat', 'Trans Fat', 'Sodium']
+    labels = ['Energy', 'Saturated Fat', 'Protein', 'Carbohydrate', 'Total Sugar',
+              'Added Sugars', 'Total Fat', 'Trans Fat', 'Sodium']
     table_dict = {}
     index = 0
     for text in table[0]:
@@ -41,11 +41,6 @@ def get_results_of_ocr(img_path: str):
     texts.append([result[0][j][1][0] for j in range(len(result[0]))])
     scores.append([result[0][k][1][1] for k in range(len(result[0]))])
     return texts
-
-
-# def check_percentage(text):
-#     lst = ['Total Fat','Saturated Fat','Sugars','Salt']
-#     for
 
 
 @app.get("/")
@@ -76,14 +71,14 @@ async def get_image_by_upload(file: UploadFile = File(...), milk: int = Form(...
         'gluten': gluten
     }
     users_ingredients_preferences = {
-        'Palm Oil':palm_oil,
-        'Onion and Garlic':onion_and_garlic
+        'Palm Oil': palm_oil,
+        'Onion and Garlic': onion_and_garlic
     }
 
     allergen_info = info.check_users_allergen_preferences(text, users_allergen_preferences)
-    ingredients_info = info.check_users_ingredient_preferences(text,users_ingredients_preferences)
-    return {"ingredients": text, 'additives': additive_information,'allergen_info': allergen_info,
-            'ingredients_info':ingredients_info}
+    ingredients_info = info.check_users_ingredient_preferences(text, users_ingredients_preferences)
+    return {"ingredients": text, 'additives': additive_information, 'allergen_info': allergen_info,
+            'ingredients_info': ingredients_info}
 
 
 @app.post("/upload/nutritiontable")
@@ -105,7 +100,7 @@ async def get_image_by_upload(file: UploadFile = File(...), salt: int = Form(...
             'Saturated Fat': sat_fat
         }
         nutrition_info = info.check_users_nutrition_preferences(table_dict, user_nutrition_preferences)
-        return {"Table": table_dict, "Nutri Score": nutri_score,'nutrition_info':nutrition_info}
+        return {"Table": table_dict, "Nutri Score": nutri_score, 'nutrition_info': nutrition_info}
     else:
         return "Sorry! Cannot Calculate Nutri Score try taking clear image"
 

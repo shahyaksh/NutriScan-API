@@ -65,7 +65,7 @@ dash-table==5.0.0
 dask
 datasets
 datashader
-datashape==0.5.4
+datashape==0.5.2
 debugpy
 decorator==4.4.2
 defusedxml
