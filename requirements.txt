@@ -201,7 +201,6 @@ opencv-python==4.6.0.66
 openpyxl==3.0.10
 packaging
 paddleocr==2.7.0.0
-paddlepaddle-gpu==2.1.0
 pandas==1.4.4
 pandocfilters
 panel
