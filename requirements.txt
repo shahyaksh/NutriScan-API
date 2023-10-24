@@ -240,7 +240,6 @@ pycodestyle
 pycparser
 pycryptodome==3.18.0
 pyct
-pycurl==7.45.2
 pydantic==2.3.0
 pydantic_core==2.6.3
 PyDispatcher==2.0.5
