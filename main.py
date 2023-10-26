@@ -109,7 +109,7 @@ async def get_image_by_upload(file: UploadFile = File(...), salt: int = Form(...
         }
         nutrition_info = info.check_users_nutrition_preferences(table_dict, user_nutrition_preferences)
         table_data_and_nutriscore = {"Table": table_dict, "Nutri Score": nutri_score}
-        for k,v in nutrition_info.values():
+        for k,v in nutrition_info.items():
             table_data_and_nutriscore['k']=v
 
         return table_data_and_nutriscore
