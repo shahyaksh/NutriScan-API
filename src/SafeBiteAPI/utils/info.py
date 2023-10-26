@@ -146,10 +146,10 @@ def check_allergens(ingredient_list):
     :param ingredient_list:
     :return: List of allergens that are present
     """
-    detect_milk = re.compile('[Mm]ilk')
-    detect_soy = re.compile('[Ss]oy')
-    detect_nuts = re.compile('[Nn]uts')
-    detect_gluten = re.compile('[Gg]luten]')
+    detect_milk = re.compile('milk', re.I)
+    detect_soy = re.compile('soy', re.I)
+    detect_nuts = re.compile('nuts', re.I)
+    detect_gluten = re.compile('gluten]', re.I)
     allergen_list = []
     ing_lst_to_str = ''.join(ingredient_list[0])
     if detect_milk.findall(ing_lst_to_str):
@@ -172,9 +172,9 @@ def check_ingredients(ingredient_list):
     :param ingredient_list:
     :return: weather the food is vegan or veg, is palm oil free,is without onion or garlic
     """
-    detect_palm_oil = re.compile('[Pp]alm')
-    detect_onion = re.compile('[Oo]nion')
-    detect_garlic = re.compile('[Gg]arlic')
+    detect_palm_oil = re.compile('palm', re.I)
+    detect_onion = re.compile('onion', re.I)
+    detect_garlic = re.compile('garlic', re.I)
     ing_lst_to_str = ''.join(ingredient_list[0])
     result = []
     if detect_palm_oil.findall(ing_lst_to_str):

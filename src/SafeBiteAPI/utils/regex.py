@@ -92,7 +92,7 @@ def get_additives_from_ingredients(ingredient_list):
             additive_1 = [re.sub('E ', 'E', additive) for additive in additive_1]
             e_num_lst.extend(additive_1)
         elif additive_2:
-            additive_2 = [re.sub('[INS]', 'E', additive) for additive in additive_2]
+            additive_2 = [re.sub('[INS]', 'E', re.sub(' ', '', additive)) for additive in additive_2]
             e_num_lst.extend(additive_2)
         elif additive_3:
             additive_3 = ['E' + additive for additive in additive_3]
@@ -105,14 +105,16 @@ def get_additives_from_ingredients(ingredient_list):
 
 
 if __name__ == "__main__":
-    list = [["COATED WAFER LAYERS",
-             "Ingredients:Sugar.Hydrogenated",
-             "vegetable fat,Refined wheat flour. Milk",
-             "solids,Starch,Cocoa solids 5%",
-             "Palmolein oil,Emulsifiers (442,322,476),Edible salt",
-             "Yeast, Raising agent 500(ii,Improver Enzyme",
-             "CONTAINS ADDED FLAVOUR NATURAL, NATURE IDENTICAL AND",
-             "ARTIPICIAL (CARAMEL AND ETHYL VANILLIN) FLAVOURING SUBSTANCES)",
-             "Allergen informationContains Milk & Wheat."]]
+    list = [["Ingredients:Refined Wheat Flour {Maida 56.4%",
+      "CkSCSavoures",
+      "Edible Vegetable Oil Palmolein Oil).Starch,Suga",
+      "Spice & Condiments (Red Chilli Powder.lodizen",
+      "Salt, Dehydrated Vegetable Powder (Dry Mango",
+      "Acidity Regulator INS 330).Flavour (Natural ang",
+      "Nature ldentical Flavouring Substances),Papnka",
+      "Extract INS 160c &Anticaking Agent INS 551",
+      "*Used as Natural Flavouring Agent",
+      "Contains:Wheat",
+      "May contains Soy,Milk &Nut"]]
     additive_info = get_additives_from_ingredients(list)
     print(additive_info)

@@ -4,6 +4,7 @@ import uuid
 from paddleocr import PaddleOCR
 import pymongo
 from pymongo.server_api import ServerApi
+import re
 
 uri = "mongodb+srv://yakshshah:Yaksh1782@nutriscan.bsfbzvl.mongodb.net/?retryWrites=true&w=majority"
 # Create a new client and connect to the server
@@ -85,7 +86,10 @@ async def get_image_by_upload(file: UploadFile = File(...), milk: int = Form(...
 
     allergen_info = info.check_users_allergen_preferences(text, users_allergen_preferences)
     ingredients_info = info.check_users_ingredient_preferences(text, users_ingredients_preferences)
-    return {"ingredients": text, 'additives': additive_information, 'allergen_info': allergen_info,
+    ing_str = re.sub('[():{}]',' ',' '.join(text[0]))
+    print(ing_str)
+
+    return {"ingredients": ing_str, 'additives': additive_information, 'allergen_info': allergen_info,
             'ingredients_info': ingredients_info}
 
 
