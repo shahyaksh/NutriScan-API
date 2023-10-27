@@ -118,6 +118,6 @@ async def get_image_by_upload(file: UploadFile = File(...), salt: int = Form(...
 
         return table_data_and_nutriscore
     else:
-        return "Sorry! Cannot Calculate Nutri Score try taking clear image"
+        return None
 
 # logger.info("Welcome to Safe Bite API")
