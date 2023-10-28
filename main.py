@@ -81,7 +81,9 @@ async def get_image_by_upload(file: UploadFile = File(...), milk: int = Form(...
     }
     users_ingredients_preferences = {
         'Palm Oil': palm_oil,
-        'Onion and Garlic': onion_and_garlic
+        'Onion and Garlic': onion_and_garlic,
+        'Onion': onion_and_garlic,
+        'Garlic': onion_and_garlic
     }
 
     allergen_info = info.check_users_allergen_preferences(text, users_allergen_preferences)

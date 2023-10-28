@@ -181,6 +181,11 @@ def check_ingredients(ingredient_list):
         result.append("palm oil")
     if detect_garlic.findall(ing_lst_to_str) and detect_onion.findall(ing_lst_to_str):
         result.append("onion and garlic")
+    elif detect_garlic.findall(ing_lst_to_str):
+        result.append("garlic")
+    elif detect_onion.findall(ing_lst_to_str):
+        result.append("onion")
+
     return result
 
 
