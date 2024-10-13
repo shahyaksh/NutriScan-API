@@ -24,8 +24,8 @@
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/safebite-api.git
-cd safebite-api
+git clone https://github.com/shahyaksh/safebite-api.git
+cd NutriScanAPI
 ```
 
 ### 2. Install Dependencies
