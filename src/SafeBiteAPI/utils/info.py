@@ -1,5 +1,8 @@
 import re
-from src.SafeBiteAPI.utils import regex
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
+from SafeBiteAPI.utils import regex
 
 
 def check_salt_quantity(nutrition_table):
