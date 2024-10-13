@@ -24,7 +24,7 @@
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/shahyaksh/safebite-api.git
+git clone https://github.com/shahyaksh/NutriScanAPI.git
 cd NutriScanAPI
 ```
 
