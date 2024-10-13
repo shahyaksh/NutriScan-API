@@ -8,9 +8,9 @@ from pymongo.server_api import ServerApi
 import re
 
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
-from SafeBiteAPI.utils import regex, info
+from NutriScanAPI.utils import regex, info
 
-uri = "mongodb+srv://yakshshah:Yaksh1782@nutriscan.bsfbzvl.mongodb.net/?retryWrites=true&w=majority"
+uri = "Your MongoDb URL"
 # Create a new client and connect to the server
 client = pymongo.MongoClient(uri, server_api=ServerApi('1'))
 
