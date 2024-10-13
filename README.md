@@ -1,6 +1,6 @@
-# SafeBite API
+# NutriScan API
 
-**SafeBite API** is a FastAPI-powered service that processes images of ingredient lists and nutrition tables from food products. It uses Optical Character Recognition (OCR) to extract text from the images, checks for the presence of food additives, allergens, and nutritional content, and evaluates the data against user preferences (e.g., allergies, dietary restrictions).
+**NutriScan API** is a FastAPI-powered service that processes images of ingredient lists and nutrition tables from food products. It uses Optical Character Recognition (OCR) to extract text from the images, checks for the presence of food additives, allergens, and nutritional content, and evaluates the data against user preferences (e.g., allergies, dietary restrictions).
 
 ---
 
@@ -146,6 +146,15 @@ curl -X 'POST' 'http://127.0.0.1:8000/upload/nutritiontable' \
 This API connects to a MongoDB database to retrieve information about food additives. Ensure your MongoDB instance is running and that the connection URI is properly set. The database and collection names used are:
 - **Database**: `FoodAdditives`
 - **Collection**: `Additives`
+
+# API Demo
+Watch working of the API [here](https://drive.google.com/file/d/1x40lju3RnY4X-gbP00R4zvgIircnKc5G/view?usp=drive_link)
+
+# Flutter Application
+Get our Flutter App [here](https://github.com/bhakti1509/nutricsan)
+
+# Checkout the Full video
+Get the full video of out NutriScan Application [here](https://drive.google.com/file/d/1XL3nSaGOhTcGiCDLzhRyKHcaNAXea17H/view?usp=drive_link)
 
 ## License
 This project is licensed under the MIT License.
